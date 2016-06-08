@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Container_Devices : MonoBehaviour, ScanResultsUpdater.IScanUpdate {
 
+    private EVRSuitManager _manager;
     private GameObject deviceToggle;
     public GameObject deviceScroll;
     private float height;
@@ -20,6 +21,8 @@ public class Container_Devices : MonoBehaviour, ScanResultsUpdater.IScanUpdate {
 
 	// Use this for initialization
 	void Start () {
+
+        _manager = GameObject.Find("EVRSuitManager").GetComponent<EVRSuitManager>();
 
         GameObject.Find("ScanResultsUpdater")
             .GetComponent<ScanResultsUpdater>().setUpdateView(this);
@@ -83,5 +86,23 @@ public class Container_Devices : MonoBehaviour, ScanResultsUpdater.IScanUpdate {
         {
             updateToggleDevice(device);
         }
+    }
+
+    public void connectSelected()
+    {
+        List<string> selected = new List<string>();
+        foreach(var pair in displayedDevices)
+        {
+            if (pair.Value.GetComponentInChildren<Toggle>().isOn)
+            {
+                selected.Add(pair.Key);
+                Debug.Log(pair.Key);
+            }
+        }
+    }
+
+    public void disconnectSelected()
+    {
+
     }
 }

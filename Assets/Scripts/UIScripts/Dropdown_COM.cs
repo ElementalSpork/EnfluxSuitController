@@ -5,8 +5,8 @@ using System;
 
 public class Dropdown_COM : MonoBehaviour {
 
-    EVRSuitManager _manager;
-    Dropdown self;
+    private EVRSuitManager _manager;
+    private Dropdown self;
 
     void Start()
     {
