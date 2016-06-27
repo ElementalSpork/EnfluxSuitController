@@ -102,11 +102,11 @@ public class Container_Devices : MonoBehaviour, ScanResultsUpdater.IScanUpdate {
             }
         }
 
-        EnfluxVRSuit.connect(selected);
+        _manager.connectEnflux(selected);
     }
 
     public void disconnectSelected()
     {
-
+        _manager.disconnectEnflux();
     }
 }
