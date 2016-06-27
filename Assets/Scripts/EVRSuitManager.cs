@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System;
+using System.IO;
 using System.Text;
+using System.Net.Sockets;
 using System.Collections;
 using System.Collections.Generic;
 using EnflxStructs;
@@ -13,6 +14,13 @@ public class EVRSuitManager : MonoBehaviour
     public List<string> ports { get { return availablePorts._ports; } }
     public List<string> connectedDevices;
     private State operatingState = State.NONE;
+    private string host = "localhost";
+    private Int32 port = 12900;
+    private NetworkStream stream;
+    private StreamWriter streamWriter;
+    private BinaryReader streamReader;
+    private TcpClient client;
+    private System.Diagnostics.Process serverProcess;
 
     private enum State
     {
@@ -34,8 +42,53 @@ public class EVRSuitManager : MonoBehaviour
     
     void Start()
     {
-        //todo: add in start up of socket server
-    }  
+        /**
+         * required so that when socket server launches, does not pause Unity
+         * will go away in future iterations
+         * */
+        Application.runInBackground = true;
+        StartCoroutine(launchServer());
+    }
+
+    void OnApplicationQuit()
+    {
+        //Just in case some steps were skipped
+        Debug.Log("Making sure things are closed down");
+        /**
+         * Skips state check to be certain that port and background thread is
+         * shutdown
+         * */
+        EnfluxVRSuit.detachPort();
+
+    }
+
+    /**
+     * Uses coroutine in order to not block main thread
+     * Launches Enflux Java socket server
+     * The server processes the sensor data stream
+     * and produces orientation angles
+     * */
+    private IEnumerator launchServer()
+    {
+        serverProcess = new System.Diagnostics.Process();
+        string dir = Path.Combine(Environment.CurrentDirectory, "Assets/Plugins");
+        string file = Path.Combine(dir, "EVRServer.exe");
+        serverProcess.StartInfo.FileName = file;
+        if (serverProcess.Start())
+        {
+            Debug.Log("Socket server started");
+        }
+
+        //todo: replace this with message from server
+        //confirming connection
+        yield return new WaitForSeconds(5);
+        client = new TcpClient(host, port);
+        stream = client.GetStream();
+        //todo: looking into doing this such that encoding is specified
+        streamWriter = new StreamWriter(stream);
+        //todo: verify that this is correct encoding
+        streamReader = new BinaryReader(stream, Encoding.UTF8);
+    }
 
     /**
      * parse friendly name to find COM port 
