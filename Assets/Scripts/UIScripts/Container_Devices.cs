@@ -44,12 +44,14 @@ public class Container_Devices : MonoBehaviour, ScanResultsUpdater.IScanUpdate {
 
     private void addToggleDevice(BleDevice device)
     {
+        //calculated height of scroll container
         count++;
         scrollHeight = (height + 1.5f) * count;
 
         containerTransform.offsetMin = new Vector2(4.0f, -scrollHeight);
         containerTransform.offsetMax = new Vector2(-5.0f, 0);
 
+        //create new entry
         GameObject newToggle = Instantiate(Resources.Load("Prefabs/Toggle_Device")) as GameObject;  
         
         newToggle.name = device.mac;
@@ -99,6 +101,8 @@ public class Container_Devices : MonoBehaviour, ScanResultsUpdater.IScanUpdate {
                 Debug.Log(pair.Key);
             }
         }
+
+        EnfluxVRSuit.connect(selected);
     }
 
     public void disconnectSelected()

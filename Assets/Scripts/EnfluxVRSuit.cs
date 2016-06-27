@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using EnflxStructs;
@@ -26,7 +26,57 @@ internal static class EnfluxVRSuit {
 
         [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
         public static extern void detachPort();
+
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int connectDevices(StringBuilder devices, int numdevices);
+
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int disconnectDevices(int numdevices);
+
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void performCalibration(int numdevices);
+
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void finishCalibration(int numdevices);
+
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void streamRealTime(int numdevices);
+
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void stopRealTime(int numdevices);
     }
+
+    public static void connect(List<string> devices)
+    {
+        StringBuilder apiArg = new StringBuilder();
+
+        for(int device = 0; device < devices.Count; device++)
+        {
+            apiArg.Append(devices[device]);
+            if(device < (devices.Count - 1))
+            {
+                apiArg.Append(",");
+            }
+        }
+        //api expects input of all address to connect to, seperated by comma
+        //example format: XX:XX:XX:XX:XX:XX,YY:YY:YY:YY:YY:YY
+        EVRSUIT_0_0_1.connectDevices(apiArg, devices.Count);
+    }
+
+    //public static void disconnect()
+    //{
+    //    EVRSUIT_0_0_1.disconnectDevice();
+    //}
+
+    //public static void startStreaming()
+    //{
+    //    EVRSUIT_0_0_1.startSensorStream();
+    //}
+
+    //public static void stopStreaming()
+    //{
+    //    EVRSUIT_0_0_1.stopSensorStream();
+    //}
 
     public static void startScanPorts(IFindPortCallback fcb)
     {

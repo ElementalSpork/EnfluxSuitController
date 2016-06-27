@@ -36,6 +36,26 @@ public class EVRSuitManager : MonoBehaviour
         }
     }
 
+    public void connect()
+    {
+        
+    }
+
+    //public void disconnect()
+    //{
+    //    EnfluxVRSuit.disconnect();
+    //}
+
+    //public void stream()
+    //{
+    //    EnfluxVRSuit.startStreaming();
+    //}
+
+    //public void stopIt()
+    //{
+    //    EnfluxVRSuit.stopStreaming();
+    //}
+
     public void detachPort()
     {
         EnfluxVRSuit.detachPort();
