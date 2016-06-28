@@ -13,7 +13,8 @@ public class EVRSuitManager : MonoBehaviour
     private AttachedPort attachedPort;
     public List<string> ports { get { return availablePorts._ports; } }
     public List<string> connectedDevices;
-    private State operatingState = State.NONE;
+    private ConnectionState operatingState = ConnectionState.NONE;
+    private ServerState serverState = ServerState.CLOSED;
     private string host = "localhost";
     private Int32 port = 12900;
     private NetworkStream stream;
@@ -22,7 +23,7 @@ public class EVRSuitManager : MonoBehaviour
     private TcpClient client;
     private System.Diagnostics.Process serverProcess;
 
-    private enum State
+    private enum ConnectionState
     {
         NONE,
         ATTACHED,
@@ -30,8 +31,14 @@ public class EVRSuitManager : MonoBehaviour
         CONNECTED,
         DISCONNECTED,
         CALIBRATING,
-        STREAMING,
-    }
+        STREAMING
+    };
+
+    private enum ServerState
+    {
+        CLOSED,
+        STARTED
+    };
     
     void Awake()
     {
@@ -58,10 +65,21 @@ public class EVRSuitManager : MonoBehaviour
          * Skips state check to be certain that port and background thread is
          * shutdown
          * */
-        EnfluxVRSuit.detachPort();
+        if (operatingState != ConnectionState.NONE && operatingState != ConnectionState.DETACHED)
+        {
+            EnfluxVRSuit.detachPort();
+        }
 
+        if (serverState != ServerState.CLOSED)
+        {
+            //todo: message from server confirming client disconnect
+            client.Close();
+            //todo: make this actually kill the process
+            //currently just returns and error
+            //serverProcess.Kill();
+        }
     }
-
+   
     /**
      * Uses coroutine in order to not block main thread
      * Launches Enflux Java socket server
@@ -88,6 +106,7 @@ public class EVRSuitManager : MonoBehaviour
         streamWriter = new StreamWriter(stream);
         //todo: verify that this is correct encoding
         streamReader = new BinaryReader(stream, Encoding.UTF8);
+        serverState = ServerState.STARTED;
     }
 
     /**
@@ -96,7 +115,7 @@ public class EVRSuitManager : MonoBehaviour
      * */
     public void attachPort(string friendlyName)
     {
-        if(operatingState == State.NONE || operatingState == State.DETACHED)
+        if(operatingState == ConnectionState.NONE || operatingState == ConnectionState.DETACHED)
         {
             System.Text.RegularExpressions.Regex toComPort =
             new System.Text.RegularExpressions.Regex(@".? \((COM\d+)\)$");
@@ -108,7 +127,7 @@ public class EVRSuitManager : MonoBehaviour
                 attachedPort = new AttachedPort();
                 if (EnfluxVRSuit.attachSelectedPort(comName, attachedPort) < 1)
                 {
-                    operatingState = State.ATTACHED;
+                    operatingState = ConnectionState.ATTACHED;
                 }else
                 {
                     Debug.Log("Error while trying to attach to port: " + comName);
@@ -117,7 +136,7 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to attach, program is in wrong state "  
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
@@ -135,12 +154,13 @@ public class EVRSuitManager : MonoBehaviour
             }
         }
 
-        if(operatingState == State.ATTACHED || operatingState == State.DISCONNECTED)
+        if(operatingState == ConnectionState.ATTACHED || 
+            operatingState == ConnectionState.DISCONNECTED)
         {
             if (EnfluxVRSuit.connect(apiArg, devices.Count) < 1)
             {
                 connectedDevices = devices;
-                operatingState = State.CONNECTED;
+                operatingState = ConnectionState.CONNECTED;
                 Debug.Log("Devices connected");
             }
             else
@@ -150,18 +170,18 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to connect to devices, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
     public void disconnectEnflux()
     {
-        if(operatingState == State.CONNECTED)
+        if(operatingState == ConnectionState.CONNECTED)
         {
             if (EnfluxVRSuit.disconnect(connectedDevices.Count) < 1)
             {
                 Debug.Log("Devices disconnected");
-                operatingState = State.DISCONNECTED;
+                operatingState = ConnectionState.DISCONNECTED;
             }
             else
             {
@@ -170,17 +190,17 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to disconnect, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
     public void calibrateDevices()
     {
-        if(operatingState == State.CONNECTED)
+        if(operatingState == ConnectionState.CONNECTED)
         {
             if (EnfluxVRSuit.performCalibration(connectedDevices.Count) < 1)
             {
-                operatingState = State.CALIBRATING;
+                operatingState = ConnectionState.CALIBRATING;
             }
             else
             {
@@ -189,17 +209,17 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to calibrate, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
     public void finishCalibration()
     {
-        if(operatingState == State.CALIBRATING)
+        if(operatingState == ConnectionState.CALIBRATING)
         {
             if (EnfluxVRSuit.finishCalibration(connectedDevices.Count) < 1)
             {
-                operatingState = State.CONNECTED;
+                operatingState = ConnectionState.CONNECTED;
             }
             else
             {
@@ -208,17 +228,17 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to stop calibration, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
     public void enableAnimate()
     {
-        if(operatingState == State.CONNECTED)
+        if(operatingState == ConnectionState.CONNECTED)
         {
             if (EnfluxVRSuit.streamRealTime(connectedDevices.Count) < 1)
             {
-                operatingState = State.STREAMING;
+                operatingState = ConnectionState.STREAMING;
             }
             else
             {
@@ -227,17 +247,17 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to stream, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
     public void disableAnimate()
     {
-        if(operatingState == State.STREAMING)
+        if(operatingState == ConnectionState.STREAMING)
         {
             if (EnfluxVRSuit.stopRealTime(connectedDevices.Count) > 1)
             {
-                operatingState = State.CONNECTED;
+                operatingState = ConnectionState.CONNECTED;
             }
             else
             {
@@ -246,17 +266,17 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to stop stream, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }
 
     public void detachPort()
     {
-        if(operatingState == State.ATTACHED ||  operatingState == State.DISCONNECTED)
+        if(operatingState == ConnectionState.ATTACHED ||  operatingState == ConnectionState.DISCONNECTED)
         {
             if (EnfluxVRSuit.detachPort() < 1)
             {
-                operatingState = State.DETACHED;
+                operatingState = ConnectionState.DETACHED;
             }
             else
             {
@@ -265,7 +285,7 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to detach from port, program is in wrong state "
-                + Enum.GetName(typeof(State), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));
         }
     }   
 
