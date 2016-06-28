@@ -22,6 +22,9 @@ public class EVRSuitManager : MonoBehaviour
     private BinaryReader streamReader;
     private TcpClient client;
     private System.Diagnostics.Process serverProcess;
+    private OrientationAngles orientationAngles;
+    
+    
 
     private enum ConnectionState
     {
@@ -55,6 +58,7 @@ public class EVRSuitManager : MonoBehaviour
          * */
         Application.runInBackground = true;
         StartCoroutine(launchServer());
+        orientationAngles = GameObject.Find("OrientationAngles").GetComponent<OrientationAngles>();
     }
 
     void OnApplicationQuit()
@@ -218,6 +222,7 @@ public class EVRSuitManager : MonoBehaviour
     {
         if(operatingState == ConnectionState.CALIBRATING)
         {
+            StartCoroutine(readAngles());
             if (EnfluxVRSuit.finishCalibration(connectedDevices.Count) < 1)
             {
                 operatingState = ConnectionState.CONNECTED;
@@ -252,11 +257,42 @@ public class EVRSuitManager : MonoBehaviour
         }
     }
 
+    private IEnumerator readAngles()
+    {
+        //tell server to send data
+        String foo = "request\n";
+        streamWriter.Write(foo);
+        streamWriter.Flush();
+
+        while (operatingState == ConnectionState.STREAMING)
+        {
+            //todo: this is a waste of an operation, but 
+            //server expects a string 
+            streamWriter.WriteLine("send");
+            streamWriter.Flush();
+            int multiplier = connectedDevices.Count;
+            float[] result = new float[20 * multiplier];
+            if (stream.DataAvailable)
+            {
+                for (int i = 0; i < 20 * multiplier; i++)
+                {
+                    long v = System.Net.IPAddress.NetworkToHostOrder(streamReader.ReadInt64());
+                    double angle = BitConverter.Int64BitsToDouble(v);
+                    float fangle = (float)angle;
+                    result[i] = fangle;
+                }
+                orientationAngles.addAngles(result);
+            }
+
+            yield return null;
+        }
+    }
+
     public void disableAnimate()
     {
         if(operatingState == ConnectionState.STREAMING)
         {
-            if (EnfluxVRSuit.stopRealTime(connectedDevices.Count) > 1)
+            if (EnfluxVRSuit.stopRealTime(connectedDevices.Count) < 1)
             {
                 operatingState = ConnectionState.CONNECTED;
             }
