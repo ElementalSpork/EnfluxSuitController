@@ -15,13 +15,13 @@ public class BleDevice {
     }
     private string _mac;
     public string mac
-    {   set { _mac = value;}
+    {   set { _mac = value.ToUpper();}
         get { return _mac; }
     }
 
     public BleDevice(string mac, string rssi, string name)
     {
-        _mac = mac;        
+        _mac = mac.ToUpper();        
         _rssi = rssi;
         _name = name;
     }
