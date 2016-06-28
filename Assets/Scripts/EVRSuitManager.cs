@@ -315,12 +315,7 @@ public class EVRSuitManager : MonoBehaviour
         public void scanCallback(scandata scanresult)
         {
             ThreadDispatch.instance.AddScanItem(scanresult);
-        }
-
-        public static void poop(scandata result)
-        {
-            Debug.Log(result.addr);
-        }
+        }        
 
         public void streamCallback(streamdata streamresult)
         {
