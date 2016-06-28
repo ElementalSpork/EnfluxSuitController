@@ -73,7 +73,7 @@ public class EVRSuitManager : MonoBehaviour
         if (serverState != ServerState.CLOSED)
         {
             //todo: message from server confirming client disconnect
-            client.Close();
+            //client.Close();
             //todo: make this actually kill the process
             //currently just returns and error
             //serverProcess.Kill();
@@ -89,8 +89,8 @@ public class EVRSuitManager : MonoBehaviour
     private IEnumerator launchServer()
     {
         serverProcess = new System.Diagnostics.Process();
-        string dir = Path.Combine(Environment.CurrentDirectory, "Assets/Plugins");
-        string file = Path.Combine(dir, "EVRServer.exe");
+        string dir = Path.Combine(Environment.CurrentDirectory, "Assets/Plugins/Sensors");
+        string file = Path.Combine(dir, "EVRModuleServer.jar");
         serverProcess.StartInfo.FileName = file;
         if (serverProcess.Start())
         {
@@ -181,6 +181,7 @@ public class EVRSuitManager : MonoBehaviour
             if (EnfluxVRSuit.disconnect(connectedDevices.Count) < 1)
             {
                 Debug.Log("Devices disconnected");
+                client.Close();
                 operatingState = ConnectionState.DISCONNECTED;
             }
             else
