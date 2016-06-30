@@ -6,31 +6,18 @@ using System.Text;
 public class OrientationAngles : MonoBehaviour {
 
     private Queue<float[]> angles = new Queue<float[]>();
-    private bool show = false;
-    private bool co = false;
-
-    void Update()
-    {
-        if (show)
-        {
-            if (!co)
-            {
-                StartCoroutine(showAngles());
-            }
-        }
-    }
+    private bool show = false;    
 
     public void addAngles(float[] latest)
     {
         lock (angles)
         {
-            angles.Enqueue(latest);
+            angles.Enqueue(latest);            
         }
     }
 
     public void getAngles()
     {
-
         StringBuilder result = new StringBuilder();
         foreach (float a in angles.Dequeue()){
             result.Append(a);
@@ -42,7 +29,8 @@ public class OrientationAngles : MonoBehaviour {
 
     public void startShowingAngles()
     {
-        show = true;      
+        show = true;
+        StartCoroutine(showAngles());
     }
 
     public void stopShowing()
@@ -52,19 +40,13 @@ public class OrientationAngles : MonoBehaviour {
 
     private IEnumerator showAngles()
     {
-        co = true;
-       
+        while (show)
+        {
             lock (angles)
             {
                 getAngles();
             }
-
-            Debug.Log("HEY");
-            
             yield return null;
-       
-
-        co = false;
+        }
     }
-	
 }

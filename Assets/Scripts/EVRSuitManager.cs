@@ -221,8 +221,7 @@ public class EVRSuitManager : MonoBehaviour
     public void finishCalibration()
     {
         if(operatingState == ConnectionState.CALIBRATING)
-        {
-            StartCoroutine(readAngles());
+        {            
             if (EnfluxVRSuit.finishCalibration(connectedDevices.Count) < 1)
             {
                 operatingState = ConnectionState.CONNECTED;
@@ -245,6 +244,7 @@ public class EVRSuitManager : MonoBehaviour
             if (EnfluxVRSuit.streamRealTime(connectedDevices.Count) < 1)
             {
                 operatingState = ConnectionState.STREAMING;
+                StartCoroutine(readAngles());
             }
             else
             {
@@ -260,8 +260,8 @@ public class EVRSuitManager : MonoBehaviour
     private IEnumerator readAngles()
     {
         //tell server to send data
-        String foo = "request\n";
-        streamWriter.Write(foo);
+        String serverInstruction = "request\n";
+        streamWriter.Write(serverInstruction);
         streamWriter.Flush();
 
         while (operatingState == ConnectionState.STREAMING)
@@ -283,7 +283,6 @@ public class EVRSuitManager : MonoBehaviour
                 }
                 orientationAngles.addAngles(result);
             }
-
             yield return null;
         }
     }
