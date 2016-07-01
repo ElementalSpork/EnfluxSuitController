@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Jun 30 17:53:09 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-a3f1-edb0-000006f14e38 
+Thu Jun 30 19:18:23 PDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-a43f-f6e2-000006f018f8 
 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 Loaded from file:/C:/Enflux/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
 java.vendor=Oracle Corporation
@@ -12,11 +12,11 @@ os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Thu Jun 30 17:53:22 PDT 2016:
-Shutting down instance a816c00e-0155-a3f1-edb0-000006f14e38 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
+Thu Jun 30 19:18:43 PDT 2016:
+Shutting down instance a816c00e-0155-a43f-f6e2-000006f018f8 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 ----------------------------------------------------------------
-Thu Jun 30 17:53:25 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance e03f4017-0155-a3f1-edb0-000006f14e38 
+Thu Jun 30 19:18:48 PDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance e03f4017-0155-a43f-f6e2-000006f018f8 
 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 Loaded from file:/C:/Enflux/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
 java.vendor=Oracle Corporation
@@ -28,5 +28,5 @@ os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Thu Jun 30 17:53:26 PDT 2016:
-Shutting down instance e03f4017-0155-a3f1-edb0-000006f14e38 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
+Thu Jun 30 19:18:48 PDT 2016:
+Shutting down instance e03f4017-0155-a43f-f6e2-000006f018f8 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 

@@ -10,21 +10,19 @@ public class OrientationAngles : MonoBehaviour {
 
     public void addAngles(float[] latest)
     {
-        lock (angles)
-        {
-            angles.Enqueue(latest);            
-        }
+        angles.Enqueue(latest);            
     }
 
     public void getAngles()
     {
-        StringBuilder result = new StringBuilder();
-        foreach (float a in angles.Dequeue()){
+        //StringBuilder result = new StringBuilder();
+        /*foreach (float a in angles.Dequeue()){
             result.Append(a);
             result.Append(",");
-        }
+        }*/
 
-        Debug.Log(result.ToString());
+        //Debug.Log(result.ToString());
+        Debug.Log(Time.deltaTime);
     }
 
     public void startShowingAngles()
@@ -42,10 +40,7 @@ public class OrientationAngles : MonoBehaviour {
     {
         while (show)
         {
-            lock (angles)
-            {
-                getAngles();
-            }
+            getAngles();
             yield return null;
         }
     }
