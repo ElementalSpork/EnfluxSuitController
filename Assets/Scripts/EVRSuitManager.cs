@@ -15,7 +15,7 @@ public class EVRSuitManager : MonoBehaviour
     public List<string> connectedDevices;
     private ConnectionState operatingState = ConnectionState.NONE;
     private ServerState serverState = ServerState.CLOSED;
-    private string host = "localhost";
+    private string host = "127.0.0.1";
     private Int32 port = 12900;
     private NetworkStream stream;
     private StreamWriter streamWriter;
@@ -23,8 +23,6 @@ public class EVRSuitManager : MonoBehaviour
     private TcpClient client;
     private System.Diagnostics.Process serverProcess;
     private OrientationAngles orientationAngles;
-    
-    
 
     private enum ConnectionState
     {
@@ -80,7 +78,7 @@ public class EVRSuitManager : MonoBehaviour
             //client.Close();
             //todo: make this actually kill the process
             //currently just returns and error
-            //serverProcess.Kill();
+            serverProcess.Kill();
         }
     }
    
@@ -103,7 +101,7 @@ public class EVRSuitManager : MonoBehaviour
 
         //todo: replace this with message from server
         //confirming connection
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         client = new TcpClient(host, port);
         stream = client.GetStream();
         //todo: looking into doing this such that encoding is specified
@@ -316,6 +314,7 @@ public class EVRSuitManager : MonoBehaviour
             }
             else
             {
+                operatingState = ConnectionState.DETACHED;
                 Debug.Log("Error occured while detaching");
             }
         }else
