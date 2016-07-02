@@ -44,6 +44,7 @@ public class EVRSuitManager : MonoBehaviour
     public interface IAddOrientationAngles
     {
         void addAngles(float[] angles);
+        void setMode(string mode);
     }
     
     void Awake()

@@ -171,7 +171,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 13.5029, y: 146.5318, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &396526608
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,8 +248,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 582589078}
-        m_MethodName: startShowingAngles
+      - m_Target: {fileID: 1337927674}
+        m_MethodName: realTimeAnimate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -322,7 +322,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!114 &582589078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +373,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &636925752
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,6 +691,54 @@ RectTransform:
   m_PrefabParentObject: {fileID: 22451876, guid: efbd9eacee4c9c547bd24ae5ccfc046b,
     type: 2}
   m_PrefabInternal: {fileID: 839083470}
+--- !u!1001 &1337927673
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 485334, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b06014bd3485c9745b3c960e6e303539, type: 2}
+  m_IsPrefabParent: 0
+--- !u!114 &1337927674 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11431590, guid: b06014bd3485c9745b3c960e6e303539,
+    type: 2}
+  m_PrefabInternal: {fileID: 1337927673}
+  m_Script: {fileID: 11500000, guid: a8413c856c42d1d44bba964a6a60ba46, type: 3}
 --- !u!1 &1623007624
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +832,7 @@ RectTransform:
   - {fileID: 396526609}
   - {fileID: 1854965605}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -818,7 +866,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!114 &1687254157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -907,8 +955,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 582589078}
-        m_MethodName: stopShowing
+      - m_Target: {fileID: 1337927674}
+        m_MethodName: stopRealTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1014,4 +1062,4 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3

@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri Jul 01 20:37:09 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-a9ae-6ec8-000006efe978 
+Fri Jul 01 23:34:00 PDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-aa50-5a87-000006f14d90 
 on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 Loaded from file:/C:/Enflux/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
 java.vendor=Oracle Corporation
