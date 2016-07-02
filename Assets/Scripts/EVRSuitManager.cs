@@ -22,7 +22,7 @@ public class EVRSuitManager : MonoBehaviour
     private BinaryReader streamReader;
     private TcpClient client;
     private System.Diagnostics.Process serverProcess;
-    private OrientationAngles orientationAngles;
+    private IAddOrientationAngles orientationAngles;
 
     private enum ConnectionState
     {
@@ -40,6 +40,11 @@ public class EVRSuitManager : MonoBehaviour
         CLOSED,
         STARTED
     };
+
+    public interface IAddOrientationAngles
+    {
+        void addAngles(float[] angles);
+    }
     
     void Awake()
     {
@@ -56,7 +61,8 @@ public class EVRSuitManager : MonoBehaviour
          * */
         Application.runInBackground = true;
         StartCoroutine(launchServer());
-        orientationAngles = GameObject.Find("OrientationAngles").GetComponent<OrientationAngles>();
+        orientationAngles = GameObject.Find("OrientationAngles")
+            .GetComponent<IAddOrientationAngles>();
     }
 
     void OnApplicationQuit()
@@ -67,7 +73,8 @@ public class EVRSuitManager : MonoBehaviour
          * Skips state check to be certain that port and background thread is
          * shutdown
          * */
-        if (operatingState != ConnectionState.NONE && operatingState != ConnectionState.DETACHED)
+        if (operatingState != ConnectionState.NONE && operatingState 
+            != ConnectionState.DETACHED)
         {
             EnfluxVRSuit.detachPort();
         }
@@ -261,6 +268,7 @@ public class EVRSuitManager : MonoBehaviour
         String serverInstruction = "request\n";
         streamWriter.Write(serverInstruction);
         streamWriter.Flush();
+        int formattedAnglesLength = 20;
 
         while (operatingState == ConnectionState.STREAMING)
         {
@@ -269,10 +277,10 @@ public class EVRSuitManager : MonoBehaviour
             streamWriter.WriteLine("send");
             streamWriter.Flush();
             int multiplier = connectedDevices.Count;
-            float[] result = new float[20 * multiplier];
+            float[] result = new float[formattedAnglesLength * multiplier];
             if (stream.DataAvailable)
             {
-                for (int i = 0; i < 20 * multiplier; i++)
+                for (int i = 0; i < formattedAnglesLength * multiplier; i++)
                 {
                     long v = System.Net.IPAddress.NetworkToHostOrder(streamReader.ReadInt64());
                     double angle = BitConverter.Int64BitsToDouble(v);

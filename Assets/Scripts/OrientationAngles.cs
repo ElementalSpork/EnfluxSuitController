@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System;
 
-public class OrientationAngles : MonoBehaviour {
+public class OrientationAngles : MonoBehaviour, EVRSuitManager.IAddOrientationAngles {
 
     private Queue<float[]> angles = new Queue<float[]>();
-    private bool show = false;    
+    private bool show = false;
+    private System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();    
 
     public void addAngles(float[] latest)
     {
@@ -22,12 +23,13 @@ public class OrientationAngles : MonoBehaviour {
         }*/
 
         //Debug.Log(result.ToString());
-        Debug.Log(Time.deltaTime);
+        Debug.Log(timer.Elapsed);       
     }
 
     public void startShowingAngles()
     {
         show = true;
+        timer.Start();
         StartCoroutine(showAngles());
     }
 
