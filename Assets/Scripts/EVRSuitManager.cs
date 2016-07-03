@@ -271,6 +271,8 @@ public class EVRSuitManager : MonoBehaviour
         streamWriter.Flush();
         int formattedAnglesLength = 20;
 
+        //todo: read and set mode
+
         while (operatingState == ConnectionState.STREAMING)
         {
             //todo: this is a waste of an operation, but 
