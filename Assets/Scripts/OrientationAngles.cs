@@ -36,37 +36,4 @@ public class OrientationAngles : MonoBehaviour, EVRSuitManager.IAddOrientationAn
     {
         return mode;
     }
-
-    //public void getAngles()
-    //{
-    //    //StringBuilder result = new StringBuilder();
-    //    /*foreach (float a in angles.Dequeue()){
-    //        result.Append(a);
-    //        result.Append(",");
-    //    }*/
-
-    //    //Debug.Log(result.ToString());
-    //    Debug.Log(timer.Elapsed);       
-    //}
-
-    //public void startShowingAngles()
-    //{
-    //    show = true;
-    //    timer.Start();
-    //    StartCoroutine(showAngles());
-    //}
-
-    //public void stopShowing()
-    //{
-    //    show = false;
-    //}    
-
-    //private IEnumerator showAngles()
-    //{
-    //    while (show)
-    //    {
-    //        getAngles();
-    //        yield return null;
-    //    }
-    //}
 }

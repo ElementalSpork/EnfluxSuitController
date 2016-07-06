@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Sat Jul 02 17:22:01 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-ae22-2471-000006f14b88 
-on database directory C:\Enflux\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
-Loaded from file:/C:/Enflux/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
+Wed Jul 06 09:49:26 PDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-c11d-3d34-00000e620938 
+on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
+Loaded from file:/D:/Projects/GitLab/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_91-b15
-user.dir=C:\Enflux\EnfluxSuitController
-os.name=Windows 10
+java.runtime.version=1.8.0_31-b13
+user.dir=D:\Projects\GitLab\EnfluxSuitController
+os.name=Windows 8.1
 os.arch=amd64
-os.version=10.0
+os.version=6.3
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

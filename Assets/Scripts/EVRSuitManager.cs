@@ -263,15 +263,17 @@ public class EVRSuitManager : MonoBehaviour
         }
     }
 
+    //determine mode then start reading
     private IEnumerator readAngles()
     {
+        
+
+        
         //tell server to send data
-        String serverInstruction = "request\n";
+        serverInstruction = "request\n";
         streamWriter.Write(serverInstruction);
         streamWriter.Flush();
-        int formattedAnglesLength = 20;
-
-        //todo: read and set mode
+        int formattedAnglesLength = 20;        
 
         while (operatingState == ConnectionState.STREAMING)
         {
@@ -293,6 +295,30 @@ public class EVRSuitManager : MonoBehaviour
                 orientationAngles.addAngles(result);
             }
             yield return null;
+        }
+    }
+
+    private void readAndSetMode()
+    {
+        //read and set mode
+        string serverInstruction = "requestmode\n";
+        streamWriter.Write(serverInstruction);
+        streamWriter.Flush();
+
+        switch (streamReader.Read())
+        {
+            case 0:
+                orientationAngles.setMode("none");
+                break;
+            case 1:
+                orientationAngles.setMode("upper");
+                break;
+            case 2:
+                orientationAngles.setMode("lower");
+                break;
+            case 3:
+                orientationAngles.setMode("full");
+                break;
         }
     }
 
