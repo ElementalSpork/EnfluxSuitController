@@ -15,8 +15,8 @@ public class OrientationAngles : MonoBehaviour, EVRHumanoidLimbMap.IGetOrientati
     }
 
     public float[] getAngles()
-    {
-        if(angles.Count > 0)
+    {        
+        if (angles.Count > 0)
         {
             return angles.Dequeue();
         }else

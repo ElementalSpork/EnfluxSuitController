@@ -46,6 +46,7 @@ public class EVRSuitManager : MonoBehaviour
     {
         void addAngles(float[] angles);
         void setMode(int mode);
+        string getMode();
     }
     
     void Awake()
@@ -268,7 +269,7 @@ public class EVRSuitManager : MonoBehaviour
     private IEnumerator readAngles()
     {
 
-        if(serverState != ServerState.SET)
+        if (serverState != ServerState.SET)
         {
             if (setAnimationMode() < 1)
             {
@@ -278,7 +279,7 @@ public class EVRSuitManager : MonoBehaviour
         }
 
         //tell server to send data
-        streamWriter.WriteLine("request");
+        streamWriter.WriteLine(orientationAngles.getMode());       
         streamWriter.Flush();
         int formattedAnglesLength = 20;        
 
@@ -312,7 +313,7 @@ public class EVRSuitManager : MonoBehaviour
         streamWriter.Flush();
         int mode = 0;
         for(int i = 0; i < 2; i++)
-        {
+        {            
             mode = streamReader.Read();
         }
         orientationAngles.setMode(mode);
@@ -326,15 +327,29 @@ public class EVRSuitManager : MonoBehaviour
             if (EnfluxVRSuit.stopRealTime(connectedDevices.Count) < 1)
             {
                 operatingState = ConnectionState.CONNECTED;
+                clearStream();
+                //stop animation mode
+                orientationAngles.setMode(0);
+                serverState = ServerState.STARTED;
             }
             else
             {
                 Debug.Log("Problem occured while stopping stream");
             }
-        }else
+        }
+        else
         {
             Debug.Log("Unable to stop stream, program is in wrong state "
                 + Enum.GetName(typeof(ConnectionState), operatingState));
+        }
+    }
+
+    private void clearStream()
+    {
+        while (stream.DataAvailable)
+        {
+            System.Net.IPAddress.NetworkToHostOrder(streamReader.ReadInt64());            
+            Debug.Log("Clearing");
         }
     }
 

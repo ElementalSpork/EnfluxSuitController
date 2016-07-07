@@ -21,8 +21,8 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
 
     private OrientationAngles updateOrientations;
     private ILimbAnimator animator;
-    private AnimState animState = AnimState.UNANIMATED;
-    public int _value = 6;
+    private AnimState animState = AnimState.UNANIMATED;    
+    private string requestMode;
 
     private enum AnimState
     {
@@ -49,24 +49,26 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
 	
 	}
 
-    public void stopRealTime()
-    {
-        animState = AnimState.UNANIMATED;
-    }
-
     private IEnumerator anglesUpdater()
     {
         while(animState != AnimState.UNANIMATED)
         {
             float[] updated = updateOrientations.getAngles();
-            animator.operate();
+            animator.operate(updated);
             yield return null;
         }
     }
 
     //interface method
+    public string getMode()
+    {
+        return requestMode;
+    }
+
+    //interface method
     public void addAngles(float[] angles)
     {
+        Debug.Log("Adding...");
         updateOrientations.addAngles(angles);
     }
 
@@ -84,14 +86,17 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
                 animator = GameObject.Find("EVRUpperLimbMap")
                     .GetComponent<EVRUpperLimbMap>();
                 animState = AnimState.ANIMATING_UPPER;
+                requestMode = "requestup";
                 Debug.Log("Set mode upper");
                 break;
             case 2:
                 //instantiate
                 animState = AnimState.ANIMATING_LOWER;
+                requestMode = "requestlow";
                 break;
             case 3:
                 animState = AnimState.ANIMATING_FULL;
+                requestMode = "request";
                 break;
             default:
                 animState = AnimState.UNANIMATED;
