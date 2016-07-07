@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class EVRHumanoidLimbMap : MonoBehaviour {
+public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationAngles
+{
     public Transform root;
     public Transform cameraAnchor;
     //lower    
@@ -18,7 +19,7 @@ public class EVRHumanoidLimbMap : MonoBehaviour {
     public Transform rightUpper;
     public Transform rightFore;
 
-    private IGetOrientationAngles updateOrientations;
+    private OrientationAngles updateOrientations;
     private ILimbAnimator animator;
     private AnimState animState = AnimState.UNANIMATED;
     public int _value = 6;
@@ -33,71 +34,20 @@ public class EVRHumanoidLimbMap : MonoBehaviour {
 
     public interface IGetOrientationAngles
     {
+        void addAngles(float[] latest);
         float[] getAngles();
-        string getMode();
     }
 
     // Use this for initialization
     void Start () {
         updateOrientations = GameObject.Find("OrientationAngles")
-            .GetComponent<IGetOrientationAngles>();
+            .GetComponent<OrientationAngles>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
-
-    //todo: testing method, remove this
-    public void InstantiateTester()
-    {
-        animator = GameObject.Find("EVRUpperLimbMap").GetComponent<EVRUpperLimbMap>();
-        //animator = gameObject.AddComponent<EVRUpperLimbMap>();
-        animState = AnimState.ANIMATING_UPPER;        
-        StartCoroutine(testRotations());
-    }
-
-    //todo: testing method, remove this
-    public void StopInstantiateTester()
-    {
-        animState = AnimState.UNANIMATED;
-    }
-
-    //todo: testing method, remove this
-    private IEnumerator testRotations()
-    {
-        while (animState == AnimState.ANIMATING_UPPER)
-        {
-            animator.operate();
-            yield return null;
-        }
-    }
-
-    public void realTimeAnimate()
-    {
-        string mode = updateOrientations.getMode();
-        switch (mode)
-        {
-            case "upper":
-                //instantiate                
-                //set state
-                animState = AnimState.ANIMATING_UPPER;
-                break;
-            case "lower":
-                //instantiate
-                animState = AnimState.ANIMATING_LOWER;
-                break;
-            case "full":
-                //instantiate
-                animState = AnimState.ANIMATING_FULL;
-                break;
-            default:
-                Debug.Log("Error, unable to set mode");
-                break;
-        }
-        animState = AnimState.ANIMATING_FULL;
-        StartCoroutine(anglesUpdater());
-    }
 
     public void stopRealTime()
     {
@@ -106,11 +56,49 @@ public class EVRHumanoidLimbMap : MonoBehaviour {
 
     private IEnumerator anglesUpdater()
     {
-        while(animState == AnimState.ANIMATING_FULL)
+        while(animState != AnimState.UNANIMATED)
         {
             float[] updated = updateOrientations.getAngles();
-            Debug.Log(updated.Length);
+            animator.operate();
             yield return null;
         }
+    }
+
+    //interface method
+    public void addAngles(float[] angles)
+    {
+        updateOrientations.addAngles(angles);
+    }
+
+    //interface method
+    public void setMode(int mode)
+    {
+        Debug.Log(mode);
+        switch (mode)
+        {
+            case 0:                            
+                //set state
+                animState = AnimState.UNANIMATED;
+                break;
+            case 1:                
+                animator = GameObject.Find("EVRUpperLimbMap")
+                    .GetComponent<EVRUpperLimbMap>();
+                animState = AnimState.ANIMATING_UPPER;
+                Debug.Log("Set mode upper");
+                break;
+            case 2:
+                //instantiate
+                animState = AnimState.ANIMATING_LOWER;
+                break;
+            case 3:
+                animState = AnimState.ANIMATING_FULL;
+                break;
+            default:
+                animState = AnimState.UNANIMATED;
+                Debug.Log("Error, unable to set mode");
+                break;
+        }
+
+        StartCoroutine(anglesUpdater());
     }
 }

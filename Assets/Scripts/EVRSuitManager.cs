@@ -38,13 +38,14 @@ public class EVRSuitManager : MonoBehaviour
     private enum ServerState
     {
         CLOSED,
+        SET,
         STARTED
     };
 
     public interface IAddOrientationAngles
     {
         void addAngles(float[] angles);
-        void setMode(string mode);
+        void setMode(int mode);
     }
     
     void Awake()
@@ -62,8 +63,8 @@ public class EVRSuitManager : MonoBehaviour
          * */
         Application.runInBackground = true;
         StartCoroutine(launchServer());
-        orientationAngles = GameObject.Find("OrientationAngles")
-            .GetComponent<IAddOrientationAngles>();
+        orientationAngles = GameObject.Find("EVRHumanoidLimbMap")
+            .GetComponent<EVRHumanoidLimbMap>();
     }
 
     void OnApplicationQuit()
@@ -266,12 +267,18 @@ public class EVRSuitManager : MonoBehaviour
     //determine mode then start reading
     private IEnumerator readAngles()
     {
-        
 
-        
+        if(serverState != ServerState.SET)
+        {
+            if (setAnimationMode() < 1)
+            {
+                Debug.Log("Mode set");
+                serverState = ServerState.SET;
+            }
+        }
+
         //tell server to send data
-        serverInstruction = "request\n";
-        streamWriter.Write(serverInstruction);
+        streamWriter.WriteLine("request");
         streamWriter.Flush();
         int formattedAnglesLength = 20;        
 
@@ -297,29 +304,19 @@ public class EVRSuitManager : MonoBehaviour
             yield return null;
         }
     }
-
-    private void readAndSetMode()
+    
+    private int setAnimationMode()
     {
-        //read and set mode
-        string serverInstruction = "requestmode\n";
-        streamWriter.Write(serverInstruction);
+        //read and set mode        
+        streamWriter.WriteLine("requestmode");
         streamWriter.Flush();
-
-        switch (streamReader.Read())
+        int mode = 0;
+        for(int i = 0; i < 2; i++)
         {
-            case 0:
-                orientationAngles.setMode("none");
-                break;
-            case 1:
-                orientationAngles.setMode("upper");
-                break;
-            case 2:
-                orientationAngles.setMode("lower");
-                break;
-            case 3:
-                orientationAngles.setMode("full");
-                break;
+            mode = streamReader.Read();
         }
+        orientationAngles.setMode(mode);
+        return 0;    
     }
 
     public void disableAnimate()

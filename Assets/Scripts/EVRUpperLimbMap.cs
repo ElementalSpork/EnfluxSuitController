@@ -14,6 +14,6 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
     public void operate(float[] angles)
     {
         //parse angles
-        //applly to upper
+        //apply to upper
     }
 }
