@@ -297,7 +297,7 @@ public class EVRSuitManager : MonoBehaviour
                 {
                     long v = System.Net.IPAddress.NetworkToHostOrder(streamReader.ReadInt64());
                     double angle = BitConverter.Int64BitsToDouble(v);
-                    float fangle = (float)angle;
+                    float fangle = Convert.ToSingle(angle);
                     result[i] = fangle;
                 }
                 orientationAngles.addAngles(result);
