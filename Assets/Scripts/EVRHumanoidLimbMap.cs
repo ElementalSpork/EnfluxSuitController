@@ -25,9 +25,6 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
     private AnimState animState = AnimState.UNANIMATED;
     public InitState initState = InitState.PREINIT;
     private string requestMode;
-    private string _time;
-
-    //StreamWriter dataWriter;
 
     private enum AnimState
     {
@@ -53,9 +50,6 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
     void Start () {
         updateOrientations = GameObject.Find("OrientationAngles")
             .GetComponent<OrientationAngles>();
-
-        DateTime now = DateTime.Now;
-        _time = now.ToString("yyyyMMdd_HHmmss");        
     }
 
     // Update is called once per frame
@@ -82,23 +76,7 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
     //interface method
     public void addAngles(float[] angles)
     {        
-        updateOrientations.addAngles(angles);
-        if(angles != null)
-        {
-            for (int i = 0; i < angles.Length; i++)
-            {
-                //dataWriter.Write("HI");
-                if (i < (angles.Length - 1))
-                {
-                    //dataWriter.Write(",");
-                }
-                else
-                {
-                    //dataWriter.WriteLine();
-                }
-            }
-            //dataWriter.Flush();
-        }        
+        updateOrientations.addAngles(angles);        
     }
 
     //interface method

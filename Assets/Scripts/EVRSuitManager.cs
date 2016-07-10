@@ -362,8 +362,7 @@ public class EVRSuitManager : MonoBehaviour
                 operatingState = ConnectionState.DETACHED;
             }
             else
-            {
-                operatingState = ConnectionState.DETACHED;
+            {                
                 Debug.Log("Error occured while detaching");
             }
         }else
