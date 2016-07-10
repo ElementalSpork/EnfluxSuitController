@@ -261,7 +261,7 @@ public class EVRSuitManager : MonoBehaviour
         }else
         {
             Debug.Log("Unable to stream, program is in wrong state "
-                + Enum.GetName(typeof(ConnectionState), operatingState));
+                + Enum.GetName(typeof(ConnectionState), operatingState));            
         }
     }
 
@@ -348,8 +348,7 @@ public class EVRSuitManager : MonoBehaviour
     {
         while (stream.DataAvailable)
         {
-            System.Net.IPAddress.NetworkToHostOrder(streamReader.ReadInt64());            
-            Debug.Log("Clearing");
+            System.Net.IPAddress.NetworkToHostOrder(streamReader.ReadInt64()); 
         }
     }
 

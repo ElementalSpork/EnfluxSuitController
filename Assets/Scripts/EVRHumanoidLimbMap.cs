@@ -52,11 +52,6 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
             .GetComponent<OrientationAngles>();
     }
 
-    // Update is called once per frame
-    void Update () {
-	
-	}
-
     private IEnumerator anglesUpdater()
     {
         while(animState != AnimState.UNANIMATED)
@@ -65,6 +60,16 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
             animator.operate(updated);
             yield return null;
         }
+    }
+
+    public void initialize()
+    {
+        animator.setInit();
+    }   
+
+    public void resetInitialize()
+    {
+        animator.resetInit();
     }
 
     //interface method

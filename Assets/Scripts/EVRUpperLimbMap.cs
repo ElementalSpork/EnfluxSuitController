@@ -6,12 +6,23 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
 
     private float[] initCore = new float[] { 0, 0, 0, 0 };
 
-    public void operate()
+    public void setInit()
     {
-        
-    }    
+        initState = InitState.INIT;
+    }
 
-    //todo: use this function later
+    public void resetInit()
+    {
+        initState = InitState.PREINIT;
+    }
+    
+    //interface method
+    //public void operate()
+    //{
+        
+    //}
+
+    //interface method
     public void operate(float[] angles)
     {
         //parse angles
@@ -27,11 +38,6 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
             core.localRotation = Quaternion.AngleAxis(angles[3] - initCore[3], Vector3.down) *
                 Quaternion.AngleAxis(angles[2] - initCore[2], Vector3.left) *
                 Quaternion.AngleAxis(angles[1] - initCore[1], Vector3.forward);
-
         }
-    }
-    public void testRun()
-    {
-        initState = InitState.INIT;
     }
 }
