@@ -29,12 +29,11 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
         if (initState == InitState.PREINIT && angles != null)
         {
             //do initialization            
-            Array.Copy(angles, 0, initCore, 0, 4);
-            Array.Copy(angles, 4, initLeftUpper, 0, 4);
-            Array.Copy(angles, 8, initLeftFore, 0, 4);
-            Array.Copy(angles, 12, initRightUpper, 0, 4);
-            Array.Copy(angles, 4, initRightFore, 0, 4);
-
+            Buffer.BlockCopy(angles, 0, initCore, 0, 4 * sizeof(float));
+            Buffer.BlockCopy(angles, 4 * sizeof(float), initLeftUpper, 0, 4 * sizeof(float));
+            Buffer.BlockCopy(angles, 8 * sizeof(float), initLeftFore, 0, 4 * sizeof(float));
+            Buffer.BlockCopy(angles, 12 * sizeof(float), initRightUpper, 0, 4 * sizeof(float));
+            Buffer.BlockCopy(angles, 16 * sizeof(float), initRightFore, 0, 4 * sizeof(float));
 
         } else if (initState == InitState.INIT && angles != null)
         {

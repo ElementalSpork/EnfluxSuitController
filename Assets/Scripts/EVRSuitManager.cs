@@ -166,6 +166,8 @@ public class EVRSuitManager : MonoBehaviour
             }
         }
 
+        Debug.Log(devices.Count);
+
         if(operatingState == ConnectionState.ATTACHED || 
             operatingState == ConnectionState.DISCONNECTED)
         {

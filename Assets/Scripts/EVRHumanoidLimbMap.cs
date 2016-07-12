@@ -103,11 +103,15 @@ public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationA
                 break;
             case 2:
                 //instantiate
+                animator = GameObject.Find("EVRLowerLimbMap")
+                    .GetComponent<EVRLowerLimbMap>();
                 animState = AnimState.ANIMATING_LOWER;
                 requestMode = "requestlow";
+                Debug.Log("Set mode lower");
                 break;
             case 3:
                 animState = AnimState.ANIMATING_FULL;
+                animator = GameObject.Find("EVRFullAnimator").GetComponent<EVRFullAnimator>();
                 requestMode = "request";
                 break;
             default:
