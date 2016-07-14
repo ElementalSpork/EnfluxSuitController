@@ -38,9 +38,9 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
         } else if (initState == InitState.INIT && angles != null)
         {
             //do main animating            
-            //core.localRotation = Quaternion.AngleAxis(angles[3] - initCore[3], Vector3.up) *
-            //    Quaternion.AngleAxis(angles[2] - initCore[2], Vector3.left) *
-            //    Quaternion.AngleAxis(angles[1] - initCore[1], Vector3.back);
+            core.localRotation = Quaternion.AngleAxis(angles[3] - initCore[3], Vector3.up) *
+                Quaternion.AngleAxis(angles[2] - initCore[2], Vector3.left) *
+                Quaternion.AngleAxis(angles[1] - initCore[1], Vector3.back);
 
             //Left Upper user node 2
             //90 deg transform puts snesor in correct orientation
@@ -58,20 +58,20 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
             leftFore.localRotation = Quaternion.Inverse(leftUpper.localRotation) *
                 Quaternion.Inverse(core.localRotation) * chain;
 
-            ////Right Upper node 3
-            //chain = Quaternion.AngleAxis(angles[15], Vector3.up) *
-            //    Quaternion.AngleAxis(angles[14], Vector3.left) *
-            //    Quaternion.AngleAxis(angles[13], Vector3.back) *
-            //    Quaternion.AngleAxis(270, Vector3.up);
-            //rightUpper.localRotation = Quaternion.Inverse(core.localRotation) * chain;
+            //Right Upper node 3
+            chain = Quaternion.AngleAxis(angles[15], Vector3.up) *
+                Quaternion.AngleAxis(angles[14], Vector3.left) *
+                Quaternion.AngleAxis(angles[13], Vector3.back) *
+                Quaternion.AngleAxis(270, Vector3.up);
+            rightUpper.localRotation = Quaternion.Inverse(core.localRotation) * chain;
 
-            ////Right Fore (Animation) Right Fore (User) node 5
-            //chain = Quaternion.AngleAxis(angles[19], Vector3.up) *
-            //    Quaternion.AngleAxis(angles[18], Vector3.left) *
-            //    Quaternion.AngleAxis(angles[17], Vector3.back) *
-            //    Quaternion.AngleAxis(270, Vector3.up);
-            //rightFore.localRotation = Quaternion.Inverse(rightUpper.localRotation) *
-            //    Quaternion.Inverse(core.localRotation) * chain;
+            //Right Fore (Animation) Right Fore (User) node 5
+            chain = Quaternion.AngleAxis(angles[19], Vector3.up) *
+                Quaternion.AngleAxis(angles[18], Vector3.left) *
+                Quaternion.AngleAxis(angles[17], Vector3.back) *
+                Quaternion.AngleAxis(270, Vector3.up);
+            rightFore.localRotation = Quaternion.Inverse(rightUpper.localRotation) *
+                Quaternion.Inverse(core.localRotation) * chain;
         }
     }
 }
