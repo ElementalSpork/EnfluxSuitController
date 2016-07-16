@@ -380,7 +380,7 @@ public class EVRSuitManager : MonoBehaviour
 
         public void findportCallback(StringBuilder name)
         {
-            if (!_ports.Contains(name.ToString()))
+            if (!_ports.Contains(name.ToString()) && name.ToString().Contains("Bluegiga"))
             {
                 _ports.Add(name.ToString());
             }

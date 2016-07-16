@@ -3798,6 +3798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8413c856c42d1d44bba964a6a60ba46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hmd: {fileID: 412314, guid: 1b2e3e7a7e64bb442b108a0ab2b40c90, type: 2}
   head: {fileID: 414732}
   root: {fileID: 472740}
   cameraAnchor: {fileID: 448134}
@@ -3823,6 +3824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49502b94d90dba54d894bcaa6fe8b53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hmd: {fileID: 0}
   head: {fileID: 0}
   root: {fileID: 0}
   cameraAnchor: {fileID: 0}
@@ -3848,6 +3850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba2d8636527d2243b44f55df6602857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hmd: {fileID: 412314, guid: 1b2e3e7a7e64bb442b108a0ab2b40c90, type: 2}
   head: {fileID: 414732}
   root: {fileID: 0}
   cameraAnchor: {fileID: 0}
@@ -3873,6 +3876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40eafdf8025fa0e40815922d4d6ff1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hmd: {fileID: 412314, guid: 1b2e3e7a7e64bb442b108a0ab2b40c90, type: 2}
   head: {fileID: 414732}
   root: {fileID: 0}
   cameraAnchor: {fileID: 0}

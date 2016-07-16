@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri Jul 15 17:43:47 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-f128-bec5-00000e6208b0 
+Fri Jul 15 20:41:48 PDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-f1cb-b808-00000e6206f0 
 on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 Loaded from file:/D:/Projects/GitLab/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
 java.vendor=Oracle Corporation
@@ -12,11 +12,11 @@ os.version=6.3
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Fri Jul 15 17:43:57 PDT 2016:
-Shutting down instance a816c00e-0155-f128-bec5-00000e6208b0 on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
+Fri Jul 15 20:41:54 PDT 2016:
+Shutting down instance a816c00e-0155-f1cb-b808-00000e6206f0 on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 ----------------------------------------------------------------
-Fri Jul 15 17:44:07 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance e03f4017-0155-f128-bec5-00000e6208b0 
+Fri Jul 15 20:42:00 PDT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance e03f4017-0155-f1cb-b808-00000e6206f0 
 on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
 Loaded from file:/D:/Projects/GitLab/EnfluxSuitController/Assets/Plugins/Sensors/EVRModuleServer.jar
 java.vendor=Oracle Corporation
@@ -28,5 +28,5 @@ os.version=6.3
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Fri Jul 15 17:44:07 PDT 2016:
-Shutting down instance e03f4017-0155-f128-bec5-00000e6208b0 on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 
+Fri Jul 15 20:42:00 PDT 2016:
+Shutting down instance e03f4017-0155-f1cb-b808-00000e6206f0 on database directory D:\Projects\GitLab\EnfluxSuitController\modulesDB with class loader sun.misc.Launcher$AppClassLoader@4e25154f 

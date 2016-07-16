@@ -7,11 +7,11 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
     JointRotations jointRotations = new JointRotations();
     private Quaternion chain;
 
-    private float[] initCore = new float[] { 0, 0, 0, 0 };
-    private float[] initLeftUpper = new float[] { 0, 0, 0, 0 };
-    private float[] initLeftFore = new float[] { 0, 0, 0, 0 };
-    private float[] initRightUpper = new float[] { 0, 0, 0, 0 };
-    private float[] initRightFore = new float[] { 0, 0, 0, 0 };
+    private float[] initCore = new float[] { 0, 0, 0 };
+    private float[] initLeftUpper = new float[] { 0, 0, 0 };
+    private float[] initLeftFore = new float[] { 0, 0, 0 };
+    private float[] initRightUpper = new float[] { 0, 0, 0 };
+    private float[] initRightFore = new float[] { 0, 0, 0 };
     private Quaternion initCorePose = new Quaternion();
     private Quaternion initRightUpperPose = new Quaternion();
     private Quaternion initRightForePose = new Quaternion();
@@ -39,43 +39,49 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
 
     private void setInitRot()
     {
-        initCorePose = Quaternion.AngleAxis(initCore[3], Vector3.up) *
-            Quaternion.AngleAxis(initCore[2], Vector3.left) *
-            Quaternion.AngleAxis(initCore[1], Vector3.back);
+        initCorePose = jointRotations.rotateCore(new float[] {0, 0, initCore[2] }, new float[] { 0, 0, 0 }, 
+            hmd.localRotation);
 
-        initRightUpperPose = Quaternion.AngleAxis(initRightUpper[3], Vector3.up) *
-                Quaternion.AngleAxis(initRightUpper[2], Vector3.left) *
-                Quaternion.AngleAxis(initRightUpper[1], Vector3.back) *
-                Quaternion.AngleAxis(270, Vector3.up);
+        //set core rotation to get heading right
+        core.localRotation = initCorePose;
+
     }
 
     private IEnumerator setPoses()
     {
         while (true)
         {
-            if(corePose.Count > 0)
+
+            //only animate the head if there is a hmd
+            if (getLiveHMD())
             {
-                core.localRotation = corePose.Dequeue();
+                head.localRotation = Quaternion.Inverse(core.localRotation) *
+                    hmd.localRotation;
+            }
+
+            if (corePose.Count > 0)
+            {
+                core.localRotation = corePose.Dequeue();                
             }
 
             if(rightUpperPose.Count > 0)
             {
-                rightUpper.localRotation = Quaternion.Lerp(rightUpper.localRotation, rightUpperPose.Dequeue(), .2f);                               
+                rightUpper.localRotation = rightUpperPose.Dequeue();                               
             }
 
             if (rightForePose.Count > 0)
             {
-                rightFore.localRotation = Quaternion.Lerp(rightFore.localRotation, rightForePose.Dequeue(), .2f);
+                rightFore.localRotation = rightForePose.Dequeue();
             }
 
             if(leftUpperPose.Count > 0)
             {
-                leftUpper.localRotation = Quaternion.Lerp(leftUpper.localRotation, leftUpperPose.Dequeue(), .2f);
+                leftUpper.localRotation = leftUpperPose.Dequeue();
             }
 
             if (leftForePose.Count > 0)
             {
-                leftFore.localRotation = Quaternion.Lerp(leftFore.localRotation, leftForePose.Dequeue(), .2f);
+                leftFore.localRotation = leftForePose.Dequeue();
             }
 
             yield return null;
@@ -90,60 +96,48 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
         if (initState == InitState.PREINIT && angles != null)
         {
             //do initialization            
-            Buffer.BlockCopy(angles, 0, initCore, 0, 4 * sizeof(float));
-            Buffer.BlockCopy(angles, 4 * sizeof(float), initLeftUpper, 0, 4 * sizeof(float));
-            Buffer.BlockCopy(angles, 8 * sizeof(float), initLeftFore, 0, 4 * sizeof(float));
-            Buffer.BlockCopy(angles, 12 * sizeof(float), initRightUpper, 0, 4 * sizeof(float));
-            Buffer.BlockCopy(angles, 16 * sizeof(float), initRightFore, 0, 4 * sizeof(float));
+            Buffer.BlockCopy(angles, 1 * sizeof(float), initCore, 0, 3 * sizeof(float));
+            Buffer.BlockCopy(angles, 5 * sizeof(float), initLeftUpper, 0, 3 * sizeof(float));
+            Buffer.BlockCopy(angles, 9 * sizeof(float), initLeftFore, 0, 3 * sizeof(float));
+            Buffer.BlockCopy(angles, 13 * sizeof(float), initRightUpper, 0, 3 * sizeof(float));
+            Buffer.BlockCopy(angles, 17 * sizeof(float), initRightFore, 0, 3 * sizeof(float));
 
             setInitRot();
 
         } else if (initState == InitState.INIT && angles != null)
         {
-            //do main animating            
-            chain = Quaternion.Inverse(initCorePose) * 
-                Quaternion.AngleAxis(angles[3], Vector3.up) *
-                Quaternion.AngleAxis(angles[2], Vector3.left) *
-                Quaternion.AngleAxis(angles[1], Vector3.back);
+            //core node 1
+            float[] coreAngles = new float[] { angles[1], angles[2], angles[3] };
+            chain = jointRotations.rotateCore(coreAngles, initCore, hmd.localRotation);
 
             corePose.Enqueue(chain);
 
             //Left Upper user node 2
             //90 deg transform puts sensor in correct orientation
-            chain = Quaternion.Inverse(core.localRotation) * 
-                Quaternion.AngleAxis(angles[7], Vector3.up) *
-                Quaternion.AngleAxis(angles[6], Vector3.left) *
-                Quaternion.AngleAxis(angles[5], Vector3.back) *
-                Quaternion.AngleAxis(270, Vector3.down);
+            float[] luAngles = new float[] { angles[5], angles[6], angles[7] };
+            chain = jointRotations.rotateLeftArm(luAngles, core.localRotation, 
+                hmd.localRotation);
 
             leftUpperPose.Enqueue(chain);
 
-            //Left Fore node 4    
-            chain = Quaternion.Inverse(leftUpper.localRotation) *
-                Quaternion.Inverse(core.localRotation) *
-                Quaternion.AngleAxis(angles[11], Vector3.up) *
-                Quaternion.AngleAxis(angles[10], Vector3.left) *
-                Quaternion.AngleAxis(angles[9], Vector3.back) *
-                Quaternion.AngleAxis(270, Vector3.down);
+            //Left Fore node 4
+            float[] lfAngles = new float[] { angles[9], angles[10], angles[11] };
+            chain = jointRotations.rotateLeftForearm(lfAngles, core.localRotation, 
+                leftUpper.localRotation, hmd.localRotation);
 
             leftForePose.Enqueue(chain);
 
             //Right Upper node 3
-            chain = Quaternion.Inverse(core.localRotation) * 
-                Quaternion.AngleAxis(angles[15], Vector3.up) *
-                Quaternion.AngleAxis(angles[14], Vector3.left) *
-                Quaternion.AngleAxis(angles[13], Vector3.back) *
-                Quaternion.AngleAxis(270, Vector3.up);
+            float[] ruAngles = new float[] { angles[13], angles[14], angles[15] };
+            chain = jointRotations.rotateRightArm(ruAngles, core.localRotation, 
+                hmd.localRotation);
 
-            rightUpperPose.Enqueue(chain);            
+            rightUpperPose.Enqueue(chain);
 
             //Right Fore (Animation) Right Fore (User) node 5
-            chain = Quaternion.Inverse(rightUpper.localRotation) *
-                Quaternion.Inverse(core.localRotation) *
-                Quaternion.AngleAxis(angles[19], Vector3.up) *
-                Quaternion.AngleAxis(angles[18], Vector3.left) *
-                Quaternion.AngleAxis(angles[17], Vector3.back) *
-                Quaternion.AngleAxis(270, Vector3.up);
+            float[] rfAngles = new float[] { angles[17], angles[18], angles[19] };
+            chain = jointRotations.rotateRightForearm(rfAngles, core.localRotation, 
+                rightUpper.localRotation, hmd.localRotation);
 
             rightForePose.Enqueue(chain);
            
