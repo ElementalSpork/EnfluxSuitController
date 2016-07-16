@@ -13,7 +13,7 @@ public class EVRInitializationCounter : MonoBehaviour {
 	void Start () {
         timerText = gameObject.GetComponent<Text>();
         _manager = GameObject.Find("EVRSuitManager").GetComponent<EVRSuitManager>();
-        _limbMap = GameObject.Find("EVRHumanoidLimbMap").GetComponent<EVRHumanoidLimbMap>();
+        _limbMap = GameObject.Find("[EnfluxVRHumanoid]").GetComponent<EVRHumanoidLimbMap>();
 	}
 
     public void startInitTimer()

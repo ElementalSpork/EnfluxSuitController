@@ -64,7 +64,7 @@ public class EVRSuitManager : MonoBehaviour
          * */
         Application.runInBackground = true;
         StartCoroutine(launchServer());
-        orientationAngles = GameObject.Find("EVRHumanoidLimbMap")
+        orientationAngles = GameObject.Find("[EnfluxVRHumanoid]")
             .GetComponent<EVRHumanoidLimbMap>();
     }
 
@@ -101,7 +101,7 @@ public class EVRSuitManager : MonoBehaviour
     private IEnumerator launchServer()
     {
         serverProcess = new System.Diagnostics.Process();
-        string dir = Path.Combine(Environment.CurrentDirectory, "Assets/EnfluxVR/Plugins/Sensors");
+        string dir = Path.Combine(Environment.CurrentDirectory, "Assets/Plugins/Sensors");
         string file = Path.Combine(dir, "EVRModuleServer.jar");
         serverProcess.StartInfo.FileName = file;
         if (serverProcess.Start())
