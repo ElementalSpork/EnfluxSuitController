@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 09d8b0fd9b8df57469d34e405f94dce1
-timeCreated: 1467505198
+timeCreated: 1468632729
 licenseType: Free
 PluginImporter:
   serializedVersion: 1
@@ -8,6 +8,10 @@ PluginImporter:
   executionOrder: {}
   isPreloaded: 0
   platformData:
+    Android:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
     Any:
       enabled: 1
       settings: {}
@@ -16,6 +20,7 @@ PluginImporter:
       settings:
         CPU: x86_64
         DefaultValueInitialized: true
+        OS: Windows
     Linux:
       enabled: 0
       settings:
@@ -52,6 +57,10 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
+        SDK: AnySDK
+        ScriptingBackend: AnyScriptingBackend
   userData: 
   assetBundleName: 
   assetBundleVariant: 
