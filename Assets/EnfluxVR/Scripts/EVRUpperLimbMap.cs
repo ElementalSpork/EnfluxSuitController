@@ -14,6 +14,9 @@ public class EVRUpperLimbMap : EVRHumanoidLimbMap, ILimbAnimator {
     private float[] initRightFore = new float[] { 0, 0, 0, 0 };
     private Quaternion initCorePose = new Quaternion();
     private Quaternion initRightUpperPose = new Quaternion();
+    private Quaternion initRightForePose = new Quaternion();
+    private Quaternion initLeftUpperPose = new Quaternion();
+    private Quaternion initLeftForePose = new Quaternion();
     private Queue<Quaternion> corePose = new Queue<Quaternion>();
     private Queue<Quaternion> rightUpperPose = new Queue<Quaternion>();
     private Queue<Quaternion> rightForePose = new Queue<Quaternion>();

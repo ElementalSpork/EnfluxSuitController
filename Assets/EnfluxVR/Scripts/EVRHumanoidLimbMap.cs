@@ -5,6 +5,8 @@ using System.IO;
 
 public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationAngles
 {
+    public Transform hmd;
+    public Transform head;
     public Transform root;
     public Transform cameraAnchor;
     //lower    
