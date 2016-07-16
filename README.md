@@ -40,5 +40,18 @@
   * drag "[EnfluxVRHumanoid] > mike5 > Armature > waist " onto "waist" object of "SteamVRAdapter"
   * drag "[CameraRig] > Camera (head)" onto "Hmd" object of "SteamVRAdapter"
 
-
-
+## Instructions for use
+1. Insert Bluegiga BLED112 dongle in a USB port on Windows PC
+2. Obtain and install drivers (more on this)
+3. Run Unity project
+4. Under "COM Ports" observer "Bluegiga Bluetooth Low Energy (COMX)"
+5. Select "Attach" and turn on EnfluxVR modules
+6. Under "Devices" observe Enflux modules and select "Connect"
+7. If first time using suit or change in environment, select "Run Calibration"
+  * For about 30 seconds, move around a lot then select "Finish Calibration"
+8. Select "Start Animate Mode" 
+  * Timer will start counting down, this is time to get prepared for suit to start animating
+  * May pause at "3" while connecting to suit
+9. When countdown has completed, suit should be animating
+10. To stop, select "Stop Animate Mode" 
+  * If done using suit, select "Disconnect" **CLICKING DISCONNECT BEFORE STOPPING THE GAME IS VERY IMPORTANT**
