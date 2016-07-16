@@ -1,5 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Lower body mapping and operation with EnfluxVR suit
+//
+//======================================================================
+
+using UnityEngine;
 using System;
 
 public class EVRLowerLimbMap : EVRHumanoidLimbMap, ILimbAnimator {

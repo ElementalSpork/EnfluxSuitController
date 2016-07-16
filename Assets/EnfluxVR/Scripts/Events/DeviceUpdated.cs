@@ -1,5 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Device updated Event. This would only be used during scan to
+//          update RSSI
+//
+//======================================================================
 
 public class DeviceUpdated {
 

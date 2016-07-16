@@ -1,5 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Full body animation using EnfluxVR suit
+//
+//======================================================================
+
+using UnityEngine;
 using System;
 
 public class EVRFullAnimator : EVRHumanoidLimbMap, ILimbAnimator {

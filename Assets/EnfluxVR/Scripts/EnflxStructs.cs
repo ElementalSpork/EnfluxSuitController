@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Structs for callbacks fromEnflux native plugin
+//
+//======================================================================
 
 namespace EnflxStructs
 {

@@ -1,5 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: onClick methods for starting and stopping calibration
+//
+//======================================================================
+
+using UnityEngine;
 
 public class calibrationOnClick : MonoBehaviour {
 

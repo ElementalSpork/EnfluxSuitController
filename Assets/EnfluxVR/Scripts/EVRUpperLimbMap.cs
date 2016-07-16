@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Upperbody mapping and operation of EnfluxVR suit
+//
+//======================================================================
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;

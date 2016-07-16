@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Mapping and operations of EnfluxVR demo humanoid
+//
+//======================================================================
+
+using UnityEngine;
 using System.Collections;
-using System;
-using System.IO;
 
 public class EVRHumanoidLimbMap : MonoBehaviour, EVRSuitManager.IAddOrientationAngles
 {

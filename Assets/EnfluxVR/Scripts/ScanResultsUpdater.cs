@@ -1,7 +1,12 @@
-﻿using UnityEngine;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Scanning for Bluegiga BLED112 dongle
+//
+//======================================================================
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using EnflxStructs;
 
 public class ScanResultsUpdater : MonoBehaviour {
 

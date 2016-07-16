@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Display and update discovered EnfluxVR modules
+//
+//======================================================================
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 

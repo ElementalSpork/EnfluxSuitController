@@ -1,7 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Buffer for incoming data from EnfluxVR suit
+//
+//======================================================================
+
+using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public class OrientationAngles : MonoBehaviour, EVRHumanoidLimbMap.IGetOrientationAngles{
 

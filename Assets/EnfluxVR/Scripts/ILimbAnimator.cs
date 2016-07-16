@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Animation interface for EnfluxVR suit
+//
+//======================================================================
 
 public interface ILimbAnimator {
     //void operate();

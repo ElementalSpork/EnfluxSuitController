@@ -1,5 +1,9 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Interface to native EnfluxVR plugin
+//
+//======================================================================
+
 using System.Text;
 using System.Runtime.InteropServices;
 using EnflxStructs;
@@ -86,9 +90,6 @@ internal static class EnfluxVRSuit {
             new ScanCallbackDel(ocb.scanCallback),
             new MessageCallbackDel(ocb.messageCallback),
             new StreamCallbackDel(ocb.streamCallback));
-        //EVRSUIT_0_0_1.attachPort(port, ocb.scanCallback,
-        //    ocb.messageCallback,
-        //    ocb.streamCallback);
     }
 
     public static int detachPort()

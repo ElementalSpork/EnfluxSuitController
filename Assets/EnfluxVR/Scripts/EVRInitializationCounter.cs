@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Handles Initialization timer for EnfluxVR suit
+//
+//======================================================================
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 

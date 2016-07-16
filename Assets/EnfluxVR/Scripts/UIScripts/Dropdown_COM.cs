@@ -1,7 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Display BLED112 Dongle and COM port
+//
+//======================================================================
+
+using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class Dropdown_COM : MonoBehaviour {
 

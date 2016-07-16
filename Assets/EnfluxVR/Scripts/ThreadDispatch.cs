@@ -1,5 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Dispatching callback messages off background thread
+//
+//======================================================================
+
 using System.Collections.Generic;
 using System.Linq;
 using EnflxStructs;

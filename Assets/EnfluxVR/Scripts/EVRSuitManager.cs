@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿//========= Copyright 2016, Enflux Inc. All rights reserved. ===========
+//
+// Purpose: Managing state of EnfluxVR suit
+//
+//======================================================================
+
+using UnityEngine;
 using System;
 using System.IO;
 using System.Text;
